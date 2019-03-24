@@ -8,15 +8,8 @@ public class Note {
     private String mDescription;
     private String mDate;
     private String mImportance;
-    public static final ArrayList<Note> notes = new ArrayList<Note>();
 
-    public Note(String mCaption, String mStatus, String mDescription, String mDate, String mImportance) {
-        this.mCaption = mCaption;
-        this.mStatus = mStatus;
-        this.mDescription = mDescription;
-        this.mDate = mDate;
-        this.mImportance = mImportance;
-    }
+    public Note() {}
 
     public String getmCaption() {
         return mCaption;

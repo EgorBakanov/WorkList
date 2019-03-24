@@ -1,34 +1,33 @@
 package h.alexeypipchuk.worklist;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import h.alexeypipchuk.worklist.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    private ViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        View view = bind();
+        initRecyclerView(view);
+        //setContentView(R.layout.activity_main);
 
-        String[] caption = new String[Note.notes.size()];
-        for (int i = 0; i < caption.length; i++) caption[i] = Note.notes.get(i).getmCaption();
-        String[] date = new String[Note.notes.size()];
-        for (int i = 0; i < date.length; i++) date[i] = Note.notes.get(i).getmDate();
-        String[] importantce = new String[Note.notes.size()];
-        for (int i = 0; i < importantce.length; i++) importantce[i] = Note.notes.get(i).getmImportance();
-        String[] status = new String[Note.notes.size()];
-        for (int i = 0; i < status.length; i++) status[i] = Note.notes.get(i).getmStatus();
-        String[] description = new String[Note.notes.size()];
-        for (int i = 0; i < description.length; i++) description[i] = Note.notes.get(i).getmDescription();
+//        MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+//        binding.setEmployee(employee);
 
-        myAdapter = new MyAdapter(caption, date, importantce, status, description);
+        myAdapter = new MyAdapter();
 
         recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -36,13 +35,27 @@ public class MainActivity extends AppCompatActivity {
 
         myAdapter.setListener(new MyAdapter.Listener() {
             public void onClick(int position) {
-                Intent intent = new Intent(MainActivity.this, NoteDetail.class);
-                intent.putExtra(NoteDetail.EXTRA_NOTE_NO, position);
+                Intent intent = new Intent(MainActivity.this, DetailNoteActivity.class);
+                intent.putExtra(DetailNoteActivity.EXTRA_NOTE_NO, position);
                 startActivity(intent);
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.setUp();
+    }
+
+    private View bind(){
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        viewModel = new ViewModel();
+        binding.setViewModel(viewModel);
+        return binding.getRoot();
+    }
+
+    /////////////////////////////////////////////////// just menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -53,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_new_plan:
-                Intent intent = new Intent(this, Plan.class);
+                Intent intent = new Intent(this, NewNoteActivity.class);
                 startActivity(intent);
                 return true;
             default:

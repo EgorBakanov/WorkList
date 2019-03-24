@@ -17,12 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Plan"
+            android:name=".NewNoteActivity"
             android:label="Создание нового дела"
             android:parentActivityName=".MainActivity">
             >
         </activity>
-        <activity android:name=".NoteDetail"
+        <activity android:name=".DetailNoteActivity"
             android:label="@string/app_name"
             android:parentActivityName=".MainActivity"
             ></activity>
