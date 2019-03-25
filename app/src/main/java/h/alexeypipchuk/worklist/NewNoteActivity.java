@@ -44,9 +44,9 @@ public class NewNoteActivity extends AppCompatActivity {
                     RadioButton ImportantRb = (RadioButton) ImportantGroup.getChildAt(ImportantGroup.indexOfChild(ImportantView));
                     String ImportantState = ImportantRb.getText().toString();
 
-                    Note.notes.add(new Note(Caption.getText().toString(), StatusState,
-                            Description.getText().toString(), Date.getText().toString(), ImportantState));
-                    startActivity(new Intent(NewNoteActivity.this, MainActivity.class));
+//                    Note.notes.add(new Note(Caption.getText().toString(), StatusState,
+//                            Description.getText().toString(), Date.getText().toString(), ImportantState));
+//                    startActivity(new Intent(NewNoteActivity.this, MainActivity.class));
                 }
             }
         });

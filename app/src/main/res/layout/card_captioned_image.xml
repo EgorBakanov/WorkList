@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
-            type="h.alexeypipchuk.worklist.ViewModel"/>
+            type="h.alexeypipchuk.worklist.ItemVievModel"/>
     </data>
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardViewS
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -34,7 +35,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="10"
                     android:background="@color/design_default_color_primary"
-                    android:text="@{viewModel.caption}"
+                    android:text="Здесь будет будущая картинка"
                     android:textSize="30sp" />
 
                 <LinearLayout
@@ -48,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_weight="1"
-                        android:text="Caption"
+                        app:text="@{viewModel.mCaption}"
                         android:textSize="18sp" />
 
                     <TextView
@@ -56,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_weight="1.0"
-                        android:text="status" />
+                        app:text="@(viewModel.mStatus}" />
 
                 </LinearLayout>
 
@@ -74,10 +75,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Importance" />
+                    app:text="@{viewModel.mImportance}" />
 
             </LinearLayout>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardViewS>
 </layout>

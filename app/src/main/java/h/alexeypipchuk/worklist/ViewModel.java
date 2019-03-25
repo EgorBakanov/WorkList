@@ -2,17 +2,16 @@ package h.alexeypipchuk.worklist;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewModel extends BaseObservable {
     private static final String TAG = "DataViewModel";
     private MyAdapter adapter;
-    private List<Note> data;
+    private List<Note> notes;
 
     ViewModel() {
-        data = new ArrayList<>();
+        notes = new ArrayList<>();
         adapter = new MyAdapter();
     }
 
@@ -27,7 +26,7 @@ public class ViewModel extends BaseObservable {
 
     @Bindable
     public List<Note> getData() {
-        return this.data;
+        return this.notes;
     }
 
     @Bindable
@@ -40,7 +39,7 @@ public class ViewModel extends BaseObservable {
         for (int i = 0; i < 50; i++) {
             Note dataModel = new Note();
             dataModel.setmCaption(String.valueOf(i));
-            data.add(dataModel);
+            notes.add(dataModel);
         }
         notifyPropertyChanged(BR.data);
     }

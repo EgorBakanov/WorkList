@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,44 +38,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.mListener = listener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
-
-        public ViewHolder(CardView v) {
-            super(v);
-            cardView = v;
-        }
-
-        ItemViewBinding binding;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            bind();
-        }
-
-        /* package */ void bind() {
-            if (binding == null) {
-                binding = DataBindingUtil.bind(itemView);
-            }
-        }
-
-        void unbind() {
-            if (binding != null) {
-                binding.unbind(); // Don't forget to unbind
-            }
-        }
-
-        void setViewModel(ItemVievModel viewModel) {
-            if (binding != null) {
-                binding.setViewModel(viewModel);
-            }
-        }
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cv = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_captioned_image, parent, false);
+                .inflate(R.layout.card_captioned_image, new FrameLayout(parent.getContext()), false);
         return new ViewHolder(cv);
     }
 
@@ -126,5 +93,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             this.notes.addAll(data);
         }
         notifyDataSetChanged();
+    }
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private CardView cardView;
+        public ViewHolder(CardView v) {
+            super(v);
+            cardView = v;
+        }
     }
 }
