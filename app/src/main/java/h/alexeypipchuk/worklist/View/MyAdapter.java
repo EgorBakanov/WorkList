@@ -31,15 +31,15 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     MyAdapter() {
         // подгружаем данные из модели
         mCaptions = new String[Note.notes.size()];
-        for (int i = 0; i < mCaptions.length; i++) mCaptions[i] = Note.notes.get(i).getmCaption();
+        for (int i = 0; i < mCaptions.length; i++) mCaptions[i] = Note.notes.get(i).getCaption();
         mStatuses = new String[Note.notes.size()];
-        for (int i = 0; i < mStatuses.length; i++) mStatuses[i] = Note.notes.get(i).getmDate();
+        for (int i = 0; i < mStatuses.length; i++) mStatuses[i] = Note.notes.get(i).getDate();
         mDescriptions = new String[Note.notes.size()];
-        for (int i = 0; i < mDescriptions.length; i++) mDescriptions[i] = Note.notes.get(i).getmImportance();
+        for (int i = 0; i < mDescriptions.length; i++) mDescriptions[i] = Note.notes.get(i).getImportance();
         mDates = new String[Note.notes.size()];
-        for (int i = 0; i < mDates.length; i++) mDates[i] = Note.notes.get(i).getmStatus();
+        for (int i = 0; i < mDates.length; i++) mDates[i] = Note.notes.get(i).getStatus();
         mImportances = new String[Note.notes.size()];
-        for (int i = 0; i < mImportances.length; i++) mImportances[i] = Note.notes.get(i).getmDescription();
+        for (int i = 0; i < mImportances.length; i++) mImportances[i] = Note.notes.get(i).getDescription();
 
         // подписываемся на наблюдателя за новыми карточками(создание нового дела)
         EventBus.getDefault().register(this);
@@ -47,9 +47,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         setListener(new Listener() {
             @Override
             public void onClick(int position) {
-                EventBus.getDefault().post(new ObserverItemNote(position, Note.notes.get(position).getmCaption(),
-                        Note.notes.get(position).getmImportance(), Note.notes.get(position).getmStatus(),
-                        Note.notes.get(position).getmDate(), Note.notes.get(position).getmDescription()));
+                EventBus.getDefault().post(new ObserverItemNote(position, Note.notes.get(position).getCaption(),
+                        Note.notes.get(position).getImportance(), Note.notes.get(position).getStatus(),
+                        Note.notes.get(position).getDate(), Note.notes.get(position).getDescription()));
             }
         });
     }

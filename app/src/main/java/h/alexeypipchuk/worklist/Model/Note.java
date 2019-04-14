@@ -2,9 +2,15 @@ package h.alexeypipchuk.worklist.Model;
 
 import java.util.ArrayList;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "notes")
 public class Note {
 
     // просто моделька со сеттерами и геттерами
+    @PrimaryKey(autoGenerate = true)
+    protected int id;
     private String mCaption;
     private String mStatus;
     private String mDescription;
@@ -20,43 +26,43 @@ public class Note {
         this.mImportance = mImportance;
     }
 
-    public String getmCaption() {
+    public String getCaption() {
         return mCaption;
     }
 
-    public void setmCaption(String mCaption) {
+    public void setCaption(String mCaption) {
         this.mCaption = mCaption;
     }
 
-    public String getmStatus() {
+    public String getStatus() {
         return mStatus;
     }
 
-    public void setmStatus(String mStatus) {
+    public void setStatus(String mStatus) {
         this.mStatus = mStatus;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
-    public String getmDate() {
+    public String getDate() {
         return mDate;
     }
 
-    public void setmDate(String mDate) {
+    public void setDate(String mDate) {
         this.mDate = mDate;
     }
 
-    public String getmImportance() {
+    public String getImportance() {
         return mImportance;
     }
 
-    public void setmImportance(String mImportance) {
+    public void setImportance(String mImportance) {
         this.mImportance = mImportance;
     }
 }
