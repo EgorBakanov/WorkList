@@ -1,10 +1,13 @@
-package h.alexeypipchuk.worklist;
+package h.alexeypipchuk.worklist.View;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import h.alexeypipchuk.worklist.Observers_legacy.ObserverItemNote;
+import h.alexeypipchuk.worklist.R;
+
 import android.view.Menu;
 import android.view.MenuItem;
 

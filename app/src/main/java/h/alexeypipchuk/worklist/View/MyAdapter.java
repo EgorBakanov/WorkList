@@ -1,7 +1,13 @@
-package h.alexeypipchuk.worklist;
+package h.alexeypipchuk.worklist.View;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import h.alexeypipchuk.worklist.Model.Note;
+import h.alexeypipchuk.worklist.Observers_legacy.ObserverItemNote;
+import h.alexeypipchuk.worklist.Observers_legacy.ObserverNewNote;
+import h.alexeypipchuk.worklist.Observers_legacy.ObserverSaveNewNote;
+import h.alexeypipchuk.worklist.R;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,6 +1,8 @@
-package h.alexeypipchuk.worklist;
+package h.alexeypipchuk.worklist.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import h.alexeypipchuk.worklist.R;
+
 import android.os.Bundle;
 import android.widget.TextView;
 

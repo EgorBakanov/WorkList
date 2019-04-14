@@ -1,4 +1,4 @@
-package h.alexeypipchuk.worklist;
+package h.alexeypipchuk.worklist.Model;
 
 import java.util.ArrayList;
 

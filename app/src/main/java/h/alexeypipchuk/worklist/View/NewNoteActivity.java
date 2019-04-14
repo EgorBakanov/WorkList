@@ -1,8 +1,12 @@
-package h.alexeypipchuk.worklist;
+package h.alexeypipchuk.worklist.View;
 
 import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
+import h.alexeypipchuk.worklist.Observers_legacy.ObserverNewNote;
+import h.alexeypipchuk.worklist.Observers_legacy.ObserverSaveNewNote;
+import h.alexeypipchuk.worklist.R;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
