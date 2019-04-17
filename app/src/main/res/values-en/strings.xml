@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WorkList</string>
+    <string name="note_activity_label">Creation of a new note</string>
+    <string name="action_create_order">Create</string>
+
+    <string name="Caption">Title*</string>
+    <string name="Status">Status*</string>
+    <string name="Important">Importance*</string>
+    <string name="Date">Date</string>
+    <string name="Description">Description</string>
+
+    <string name="Done">Completed</string>
+    <string name="NotPerf">Not Completed</string>
+    <string name="VeryImportant">Very Important</string>
+    <string name="NotImportant">Not Important</string>
+</resources>

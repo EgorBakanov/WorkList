@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="statuses_array">
+        <item>@string/Done</item>
+        <item>@string/NotPerf</item>
+    </string-array>
+
+    <string-array name="importances_array">
+        <item>@string/VeryImportant</item>
+        <item>@string/NotImportant</item>
+    </string-array>
+</resources>
