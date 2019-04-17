@@ -1,6 +1,5 @@
 package h.alexeypipchuk.worklist.View;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,21 +9,14 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
 import h.alexeypipchuk.worklist.Model.Note;
-import h.alexeypipchuk.worklist.Observers_legacy.ObserverNewNote;
-import h.alexeypipchuk.worklist.Observers_legacy.ObserverSaveNewNote;
 import h.alexeypipchuk.worklist.R;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 import h.alexeypipchuk.worklist.ViewModel.NoteViewModel;
@@ -91,15 +83,12 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void handleButtonClick(View v) {
-        // простенькая валидация обязательных полей
         if (Caption.getText() == null || StatusGroup.getCheckedRadioButtonId() == -1 || ImportantGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(getApplicationContext(), "Заполните обязательные поля", Toast.LENGTH_LONG).show();
         } else {
             int StatusState = StatusGroup.getCheckedRadioButtonId();
 
             int ImportantState = ImportantGroup.getCheckedRadioButtonId();
-
-            // собрали данные и отправляем их наблюдателю, у которого адаптер позже заберет их и создаст новый объект модели
 
             note.setCaption(Caption.getText().toString());
             note.setDescription(Description.getText().toString());
@@ -110,30 +99,7 @@ public class NoteActivity extends AppCompatActivity {
             viewModel.saveNote(note);
 
             this.finish();
-            
-            /*EventBus.getDefault().post(new ObserverSaveNewNote(Caption.getText().toString(), StatusState,
-                    Description.getText().toString(), Date.getText().toString(), ImportantState));*/
         }
-    }
-
-    ///////////////// этот наблюдатель ждет разрешения адаптера на переход обратно на главну активность
-    // после успешного создания нового объекта модели
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(ObserverNewNote event) {
-        startActivity(new Intent(NoteActivity.this, MainActivity.class));
-    }
-
-    // подписка/отписка
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {

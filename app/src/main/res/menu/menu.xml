@@ -5,7 +5,7 @@
     tools:context=".View.MainActivity">
 
     <item android:id="@+id/action_new_plan"
-        android:title="Новое дело"
+        android:title="@string/action_create_order"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>
