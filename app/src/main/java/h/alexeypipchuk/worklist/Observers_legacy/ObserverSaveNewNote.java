@@ -4,12 +4,12 @@ public class ObserverSaveNewNote {
 
     // наблюдатель, через который проходят данные для создания новой карточки
     public String caption;
-    public String importance;
-    public String status;
+    public int importance;
+    public int status;
     public String date;
     public String description;
 
-    public ObserverSaveNewNote(String caption, String status, String description, String date, String importance){
+    public ObserverSaveNewNote(String caption, int status, String description, String date, int importance){
         this.caption = caption;
         this.importance = importance;
         this.status = status;
