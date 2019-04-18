@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
+import h.alexeypipchuk.worklist.Utility.BackgroundColorHelper;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 import h.alexeypipchuk.worklist.ViewModel.MainActivityViewModel;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ViewModelProvider.Factory factory;
     @Inject
     StringsHelper stringsHelper;
+    @Inject
+    BackgroundColorHelper colorHelper;
     MyAdapter adapter;
 
     @Override
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(this, stringsHelper);
+        adapter = new MyAdapter(this, stringsHelper, colorHelper);
         recyclerView.setAdapter(adapter);
 
         configViewModel();

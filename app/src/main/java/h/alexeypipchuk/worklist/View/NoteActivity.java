@@ -63,7 +63,7 @@ public class NoteActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleButtonClick(v);
+                handleButtonClick();
             }
         });
     }
@@ -88,8 +88,8 @@ public class NoteActivity extends AppCompatActivity {
         ((RadioButton) ImportantGroup.getChildAt(note.getImportance())).setChecked(true);
     }
 
-    private void handleButtonClick(View v) {
-        if (!dataValidator.validateNote(this,
+    private void handleButtonClick() {
+        if (!dataValidator.validateNote(
                 Caption.getText().toString(),
                 Description.getText().toString(),
                 Date.getText().toString(),
@@ -126,8 +126,8 @@ public class NoteActivity extends AppCompatActivity {
         ImportantGroup = findViewById(R.id.ImportantGroup);
         btn = findViewById(R.id.floatingActionButton);
 
-        initRadioGroup(StatusGroup, stringsHelper.getAllStatuses(this));
-        initRadioGroup(ImportantGroup, stringsHelper.getAllImportances(this));
+        initRadioGroup(StatusGroup, stringsHelper.getAllStatuses());
+        initRadioGroup(ImportantGroup, stringsHelper.getAllImportances());
     }
 
     private void initRadioGroup(RadioGroup group, String[] values) {

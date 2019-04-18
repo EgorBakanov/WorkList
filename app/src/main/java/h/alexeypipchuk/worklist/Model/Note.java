@@ -17,7 +17,6 @@ public class Note {
     private String mDescription;
     private String mDate;
     private int mImportance;
-    public static final ArrayList<Note> notes = new ArrayList<Note>();
 
     @Ignore
     public Note(){}

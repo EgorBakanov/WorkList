@@ -1,9 +1,12 @@
 package h.alexeypipchuk.worklist.DI;
 
+import android.app.Application;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import h.alexeypipchuk.worklist.Utility.BackgroundColorHelper;
 import h.alexeypipchuk.worklist.Utility.DataValidator;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 
@@ -18,7 +21,13 @@ class UtilityModule {
 
     @Provides
     @Singleton
-    StringsHelper provideStringsHelper() {
-        return new StringsHelper();
+    StringsHelper provideStringsHelper(Application app) {
+        return new StringsHelper(app.getApplicationContext());
+    }
+
+    @Provides
+    @Singleton
+    BackgroundColorHelper provideBackgroundColorHelper(Application app) {
+        return new BackgroundColorHelper(app.getApplicationContext());
     }
 }

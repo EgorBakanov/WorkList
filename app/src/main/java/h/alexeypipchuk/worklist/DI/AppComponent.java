@@ -29,5 +29,5 @@ public interface AppComponent {
         AppComponent build();
     }
 
-    void inject(WorklistApp githubApp);
+    void inject(WorklistApp app);
 }

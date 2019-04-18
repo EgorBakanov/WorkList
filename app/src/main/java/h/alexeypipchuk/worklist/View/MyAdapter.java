@@ -9,11 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
+import h.alexeypipchuk.worklist.Utility.BackgroundColorHelper;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 
 
@@ -22,13 +25,13 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private Listener mListener;
 
     private List<Note> notes;
-    private final Context context;
     private final StringsHelper stringsHelper;
+    private final BackgroundColorHelper colorHelper;
 
-    MyAdapter(final Context context, final StringsHelper helper) {
+    MyAdapter(final Context context, final StringsHelper helper, final BackgroundColorHelper backgroundColorHelper) {
 
-        this.context = context;
         this.stringsHelper = helper;
+        this.colorHelper = backgroundColorHelper;
 
         setListener(new Listener() {
             @Override
@@ -69,12 +72,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         CardView cardView = holder.cardView;
-        String status = stringsHelper.getStatus(context, notes.get(position).getStatus());
-        String importance = stringsHelper.getImportance(context, notes.get(position).getImportance());
+        String status = stringsHelper.getStatus(notes.get(position).getStatus());
+        String importance = stringsHelper.getImportance(notes.get(position).getImportance());
 
         ((TextView) cardView.findViewById(R.id.caption)).setText(notes.get(position).getCaption());
         ((TextView) cardView.findViewById(R.id.importance)).setText(importance);
         ((TextView) cardView.findViewById(R.id.status)).setText(status);
+
+        colorHelper.setBackground(cardView,notes.get(position));
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

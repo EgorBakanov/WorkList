@@ -18,7 +18,7 @@ public class DataValidator {
         this.stringsHelper = stringsHelper;
     }
 
-    public boolean validateNote(Context context, String caption, String description, String date, int status, int importance) {
+    public boolean validateNote(String caption, String description, String date, int status, int importance) {
 
         if (caption == null || caption.isEmpty()) return false;
 
@@ -32,8 +32,8 @@ public class DataValidator {
             }
         }
 
-        String[] st = stringsHelper.getAllStatuses(context);
-        String[] im = stringsHelper.getAllImportances(context);
+        String[] st = stringsHelper.getAllStatuses();
+        String[] im = stringsHelper.getAllImportances();
 
         if (status < 0 || status >= st.length) return false;
 
