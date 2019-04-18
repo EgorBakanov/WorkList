@@ -23,10 +23,12 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private List<Note> notes;
     private final Context context;
+    private final StringsHelper stringsHelper;
 
-    MyAdapter(final Context context) {
+    MyAdapter(final Context context, final StringsHelper helper) {
 
         this.context = context;
+        this.stringsHelper = helper;
 
         setListener(new Listener() {
             @Override
@@ -67,8 +69,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         CardView cardView = holder.cardView;
-        String status = StringsHelper.getStatus(context, notes.get(position).getStatus());
-        String importance = StringsHelper.getImportance(context, notes.get(position).getImportance());
+        String status = stringsHelper.getStatus(context, notes.get(position).getStatus());
+        String importance = stringsHelper.getImportance(context, notes.get(position).getImportance());
 
         ((TextView) cardView.findViewById(R.id.caption)).setText(notes.get(position).getCaption());
         ((TextView) cardView.findViewById(R.id.importance)).setText(importance);

@@ -18,12 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
+import h.alexeypipchuk.worklist.Utility.StringsHelper;
 import h.alexeypipchuk.worklist.ViewModel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     @Inject
     ViewModelProvider.Factory factory;
+    @Inject
+    StringsHelper stringsHelper;
     MyAdapter adapter;
 
     @Override
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(this);
+        adapter = new MyAdapter(this, stringsHelper);
         recyclerView.setAdapter(adapter);
 
         configViewModel();

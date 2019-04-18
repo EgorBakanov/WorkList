@@ -5,9 +5,20 @@ import android.content.Context;
 import java.text.DateFormat;
 import java.text.ParseException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class DataValidator {
 
-    public static boolean validateNote(Context context, String caption, String description, String date, int status, int importance) {
+    private StringsHelper stringsHelper;
+
+    @Inject
+    public DataValidator(StringsHelper stringsHelper){
+        this.stringsHelper = stringsHelper;
+    }
+
+    public boolean validateNote(Context context, String caption, String description, String date, int status, int importance) {
 
         if (caption == null || caption.isEmpty()) return false;
 
@@ -21,8 +32,8 @@ public class DataValidator {
             }
         }
 
-        String[] st = StringsHelper.getAllStatuses(context);
-        String[] im = StringsHelper.getAllImportances(context);
+        String[] st = stringsHelper.getAllStatuses(context);
+        String[] im = stringsHelper.getAllImportances(context);
 
         if (status < 0 || status >= st.length) return false;
 

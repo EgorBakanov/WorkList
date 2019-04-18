@@ -12,7 +12,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    NoteRepository bindNoteRepository(NoteDao noteDao){
+    NoteRepository provideNoteRepository(NoteDao noteDao) {
         return new NoteRepository(noteDao);
     }
 }

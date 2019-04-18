@@ -16,6 +16,7 @@ import h.alexeypipchuk.worklist.WorklistApp;
         DBModule.class,
         RepositoryModule.class,
         ViewModelModule.class,
+        UtilityModule.class,
         AndroidInjectionModule.class
 })
 public interface AppComponent {

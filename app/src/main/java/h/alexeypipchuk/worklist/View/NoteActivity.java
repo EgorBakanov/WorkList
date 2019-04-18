@@ -28,6 +28,11 @@ public class NoteActivity extends AppCompatActivity {
 
     @Inject
     ViewModelProvider.Factory factory;
+    @Inject
+    StringsHelper stringsHelper;
+    @Inject
+    DataValidator dataValidator;
+
     NoteViewModel viewModel;
     Note note;
 
@@ -84,7 +89,7 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void handleButtonClick(View v) {
-        if(! DataValidator.validateNote(this,
+        if (!dataValidator.validateNote(this,
                 Caption.getText().toString(),
                 Description.getText().toString(),
                 Date.getText().toString(),
@@ -121,8 +126,8 @@ public class NoteActivity extends AppCompatActivity {
         ImportantGroup = findViewById(R.id.ImportantGroup);
         btn = findViewById(R.id.floatingActionButton);
 
-        initRadioGroup(StatusGroup, StringsHelper.getAllStatuses(this));
-        initRadioGroup(ImportantGroup, StringsHelper.getAllImportances(this));
+        initRadioGroup(StatusGroup, stringsHelper.getAllStatuses(this));
+        initRadioGroup(ImportantGroup, stringsHelper.getAllImportances(this));
     }
 
     private void initRadioGroup(RadioGroup group, String[] values) {
