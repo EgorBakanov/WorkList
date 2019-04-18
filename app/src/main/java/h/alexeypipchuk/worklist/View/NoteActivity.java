@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import dagger.android.AndroidInjection;
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
+import h.alexeypipchuk.worklist.Utility.DataValidator;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 import h.alexeypipchuk.worklist.ViewModel.NoteViewModel;
 
@@ -83,23 +84,33 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void handleButtonClick(View v) {
-        if (Caption.getText() == null || StatusGroup.getCheckedRadioButtonId() == -1 || ImportantGroup.getCheckedRadioButtonId() == -1) {
+        if(! DataValidator.validateNote(this,
+                Caption.getText().toString(),
+                Description.getText().toString(),
+                Date.getText().toString(),
+                StatusGroup.getCheckedRadioButtonId(),
+                ImportantGroup.getCheckedRadioButtonId())) {
+
             Toast.makeText(getApplicationContext(), "Заполните обязательные поля", Toast.LENGTH_LONG).show();
         } else {
-            int StatusState = StatusGroup.getCheckedRadioButtonId();
-
-            int ImportantState = ImportantGroup.getCheckedRadioButtonId();
-
-            note.setCaption(Caption.getText().toString());
-            note.setDescription(Description.getText().toString());
-            note.setDate(Date.getText().toString());
-            note.setImportance(ImportantState);
-            note.setStatus(StatusState);
-
-            viewModel.saveNote(note);
-
-            this.finish();
+            saveNote();
         }
+    }
+
+    private void saveNote() {
+        int StatusState = StatusGroup.getCheckedRadioButtonId();
+
+        int ImportantState = ImportantGroup.getCheckedRadioButtonId();
+
+        note.setCaption(Caption.getText().toString());
+        note.setDescription(Description.getText().toString());
+        note.setDate(Date.getText().toString());
+        note.setImportance(ImportantState);
+        note.setStatus(StatusState);
+
+        viewModel.saveNote(note);
+
+        this.finish();
     }
 
     private void initView() {
