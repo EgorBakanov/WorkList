@@ -1,6 +1,6 @@
 package h.alexeypipchuk.worklist.Model;
 
-import java.util.ArrayList;
+import android.net.Uri;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -17,17 +17,27 @@ public class Note {
     private String mDescription;
     private String mDate;
     private int mImportance;
+    private Uri imageUri;
 
     @Ignore
     public Note(){}
 
-    public Note(int id, String mCaption, int mStatus, String mDescription, String mDate, int mImportance) {
+    public Note(int id, String mCaption, int mStatus, String mDescription, String mDate, int mImportance, Uri imageUri) {
         this.id = id;
         this.mCaption = mCaption;
         this.mStatus = mStatus;
         this.mDescription = mDescription;
         this.mDate = mDate;
         this.mImportance = mImportance;
+        this.imageUri = imageUri;
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getCaption() {
