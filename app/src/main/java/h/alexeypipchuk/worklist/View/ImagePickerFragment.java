@@ -3,6 +3,7 @@ package h.alexeypipchuk.worklist.View;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,7 +23,12 @@ import dagger.android.support.AndroidSupportInjection;
 import h.alexeypipchuk.worklist.R;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 
+import static android.app.Activity.RESULT_OK;
+
 public class ImagePickerFragment extends Fragment {
+
+    private final static int GALLERY_REQUEST = 1;
+    private final static int CAMERA_REQUEST = 2;
 
     private Uri imgUri;
 
@@ -57,7 +63,23 @@ public class ImagePickerFragment extends Fragment {
                 handleClick();
             }
         });
-        Toast.makeText(getContext().getApplicationContext(),"added",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        switch (requestCode) {
+            case GALLERY_REQUEST:
+                if(resultCode == RESULT_OK){
+                    setImgUri(intent.getData());
+                }
+            case CAMERA_REQUEST:
+                if(resultCode == RESULT_OK){
+
+                }
+            default:
+        }
     }
 
     private void handleClick() {
@@ -70,10 +92,10 @@ public class ImagePickerFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        Toast.makeText(getContext().getApplicationContext(),"gallery",Toast.LENGTH_LONG).show();
+                        pickFromGallery();
                         break;
                     case 1:
-                        Toast.makeText(getContext().getApplicationContext(),"camera",Toast.LENGTH_LONG).show();
+                        pickFromCamera();
                         break;
                     default:
                         dialog.dismiss();
@@ -81,6 +103,16 @@ public class ImagePickerFragment extends Fragment {
             }
         });
         builder.show();
+    }
+
+    private void pickFromCamera() {
+        Toast.makeText(getContext(), "Pick from camera", Toast.LENGTH_SHORT).show();
+    }
+
+    private void pickFromGallery() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
     Uri getImgUri() {
