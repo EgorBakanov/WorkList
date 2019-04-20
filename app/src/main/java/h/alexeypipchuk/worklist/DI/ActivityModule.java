@@ -2,6 +2,7 @@ package h.alexeypipchuk.worklist.DI;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import h.alexeypipchuk.worklist.View.ImagePickerFragment;
 import h.alexeypipchuk.worklist.View.MainActivity;
 import h.alexeypipchuk.worklist.View.NoteActivity;
 
@@ -13,4 +14,7 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector()
     abstract NoteActivity contributeNoteActivity();
+
+    @ContributesAndroidInjector
+    abstract ImagePickerFragment contributeImagePickerFragment();
 }

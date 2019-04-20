@@ -43,7 +43,7 @@ public class NoteActivity extends AppCompatActivity {
     EditText Description;
     RadioGroup StatusGroup;
     RadioGroup ImportantGroup;
-    TextView ImgName;
+    ImagePickerFragment ImgPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,12 +81,7 @@ public class NoteActivity extends AppCompatActivity {
         Description.setText(note.getDescription());
         ((RadioButton) StatusGroup.getChildAt(note.getStatus())).setChecked(true);
         ((RadioButton) ImportantGroup.getChildAt(note.getImportance())).setChecked(true);
-        setImgName(note);
-    }
-
-    private void setImgName(Note note) {
-        ImgName.setText((note != null && note.getImageUri() != null) ?
-                stringsHelper.getFileName(note.getImageUri()) : "");
+        ImgPicker.setImgUri(note.getImageUri());
     }
 
     private void handleSubmitClick() {
@@ -113,6 +108,7 @@ public class NoteActivity extends AppCompatActivity {
         note.setDate(Date.getText().toString());
         note.setImportance(ImportantState);
         note.setStatus(StatusState);
+        note.setImageUri(ImgPicker.getImgUri());
 
         viewModel.saveNote(note);
 
@@ -125,7 +121,7 @@ public class NoteActivity extends AppCompatActivity {
         Description = findViewById(R.id.description);
         StatusGroup = findViewById(R.id.StatusGroup);
         ImportantGroup = findViewById(R.id.ImportantGroup);
-        ImgName = findViewById(R.id.imgName);
+        ImgPicker = (ImagePickerFragment) getSupportFragmentManager().findFragmentById(R.id.imgPicker);
 
         initRadioGroup(StatusGroup, stringsHelper.getAllStatuses());
         initRadioGroup(ImportantGroup, stringsHelper.getAllImportances());
@@ -136,37 +132,6 @@ public class NoteActivity extends AppCompatActivity {
                 handleSubmitClick();
             }
         });
-
-        findViewById(R.id.imgBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleImgClick();
-            }
-        });
-    }
-
-    private void handleImgClick() {
-
-        String[] options = stringsHelper.getImgPickerOptions();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.ImgDialog));
-
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        Toast.makeText(getApplicationContext(),"gallery",Toast.LENGTH_LONG).show();
-                        break;
-                    case 1:
-                        Toast.makeText(getApplicationContext(),"camera",Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
     }
 
     private void initRadioGroup(RadioGroup group, String[] values) {
