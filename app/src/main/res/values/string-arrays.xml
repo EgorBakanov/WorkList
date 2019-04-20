@@ -8,5 +8,12 @@
     <string-array name="importances_array">
         <item>@string/VeryImportant</item>
         <item>@string/NotImportant</item>
+        <item>@string/DontMind</item>
+    </string-array>
+
+    <string-array name="img_picker_options_array">
+        <item>@string/FromGallery</item>
+        <item>@string/FromCamera</item>
+        <item>@string/Cancel</item>
     </string-array>
 </resources>

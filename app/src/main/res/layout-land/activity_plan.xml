@@ -44,7 +44,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    tools:text="@string/Caption" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -60,7 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    tools:text="@string/Date" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,17 +139,44 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                tools:text="@string/Description" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|bottom|left|right"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:orientation="vertical">
 
-                app:srcCompat="@android:drawable/ic_input_add"
-                app:useCompatPadding="true" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|bottom|left|right"
+                    android:layout_weight="1"
+
+                    app:srcCompat="@android:drawable/ic_input_add"
+                    app:useCompatPadding="true" />
+
+                <Button
+                    android:id="@+id/imgBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/ImgBtn" />
+
+                <TextView
+                    android:id="@+id/imgName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_weight="0"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    tools:text="imgName" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

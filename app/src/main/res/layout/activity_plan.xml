@@ -24,6 +24,7 @@
         app:useCompatPadding="true" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="314dp"
         android:layout_marginStart="24dp"
@@ -63,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    tools:text="@string/Caption" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -79,7 +81,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    tools:text="@string/Date" />
 
             </LinearLayout>
 
@@ -135,7 +138,8 @@
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    tools:text="@string/Description" />
             </LinearLayout>
 
             <LinearLayout
@@ -166,4 +170,25 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/imgBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/ImgBtn"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/imgName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/imgBtn"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtn"
+        tools:text="imgName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
