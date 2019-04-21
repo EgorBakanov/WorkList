@@ -1,9 +1,12 @@
 package h.alexeypipchuk.worklist.View;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,14 +24,17 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 import h.alexeypipchuk.worklist.R;
+import h.alexeypipchuk.worklist.Utility.ImageHelper;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 
 import static android.app.Activity.RESULT_OK;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class ImagePickerFragment extends Fragment {
 
     private final static int GALLERY_REQUEST = 1;
     private final static int CAMERA_REQUEST = 2;
+    private static final int CAMERA_PERMISSION_REQUEST = 1;
 
     private Uri imgUri;
 
@@ -36,6 +42,8 @@ public class ImagePickerFragment extends Fragment {
 
     @Inject
     StringsHelper stringsHelper;
+    @Inject
+    ImageHelper imageHelper;
 
     public ImagePickerFragment() {
         // Required empty public constructor
@@ -74,11 +82,25 @@ public class ImagePickerFragment extends Fragment {
                 if(resultCode == RESULT_OK){
                     setImgUri(intent.getData());
                 }
+                break;
             case CAMERA_REQUEST:
                 if(resultCode == RESULT_OK){
-
+                    Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
+                    setImgUri(imageHelper.saveBitmap(bitmap));
                 }
+                break;
             default:
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ImagePickerFragment.CAMERA_PERMISSION_REQUEST) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
         }
     }
 
@@ -106,7 +128,16 @@ public class ImagePickerFragment extends Fragment {
     }
 
     private void pickFromCamera() {
-        Toast.makeText(getContext(), "Pick from camera", Toast.LENGTH_SHORT).show();
+
+        if (checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST);
+        }
+        else
+        {
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        }
     }
 
     private void pickFromGallery() {

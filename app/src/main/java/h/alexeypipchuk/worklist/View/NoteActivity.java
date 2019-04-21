@@ -1,21 +1,18 @@
 package h.alexeypipchuk.worklist.View;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import javax.inject.Inject;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+
+import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import h.alexeypipchuk.worklist.Model.Note;
