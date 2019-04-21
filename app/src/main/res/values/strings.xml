@@ -20,5 +20,7 @@
     <string name="ImgDialog">Choose source of image</string>
     <string name="FromGallery">From Gallery</string>
     <string name="FromCamera">From camera</string>
-    <string name="Cancel">cancel</string>
+    <string name="Cancel">Cancel</string>
+
+    <string name="NoteValidationFailure">Validation failure!</string>
 </resources>

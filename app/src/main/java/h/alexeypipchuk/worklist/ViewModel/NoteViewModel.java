@@ -1,11 +1,10 @@
 package h.alexeypipchuk.worklist.ViewModel;
 
-import java.util.List;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.Model.NoteRepository;
 

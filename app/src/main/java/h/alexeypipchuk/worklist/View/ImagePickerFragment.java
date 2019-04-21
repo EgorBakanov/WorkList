@@ -1,41 +1,46 @@
 package h.alexeypipchuk.worklist.View;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 import h.alexeypipchuk.worklist.R;
+import h.alexeypipchuk.worklist.Utility.ImageHelper;
 import h.alexeypipchuk.worklist.Utility.StringsHelper;
 
 import static android.app.Activity.RESULT_OK;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class ImagePickerFragment extends Fragment {
 
     private final static int GALLERY_REQUEST = 1;
     private final static int CAMERA_REQUEST = 2;
+    private static final int CAMERA_PERMISSION_REQUEST = 1;
 
     private Uri imgUri;
-
     private TextView imgName;
 
     @Inject
     StringsHelper stringsHelper;
+    @Inject
+    ImageHelper imageHelper;
 
     public ImagePickerFragment() {
         // Required empty public constructor
@@ -71,17 +76,32 @@ public class ImagePickerFragment extends Fragment {
 
         switch (requestCode) {
             case GALLERY_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     setImgUri(intent.getData());
                 }
+                break;
             case CAMERA_REQUEST:
-                if(resultCode == RESULT_OK){
-
+                if (resultCode == RESULT_OK) {
+                    Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
+                    setImgUri(imageHelper.saveBitmap(bitmap));
                 }
+                break;
             default:
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ImagePickerFragment.CAMERA_PERMISSION_REQUEST) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+        }
+    }
+
+    //region logic
     private void handleClick() {
         String[] options = stringsHelper.getImgPickerOptions();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -106,7 +126,13 @@ public class ImagePickerFragment extends Fragment {
     }
 
     private void pickFromCamera() {
-        Toast.makeText(getContext(), "Pick from camera", Toast.LENGTH_SHORT).show();
+
+        if (checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST);
+        } else {
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        }
     }
 
     private void pickFromGallery() {
@@ -114,6 +140,7 @@ public class ImagePickerFragment extends Fragment {
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
+    //endregion
 
     Uri getImgUri() {
         return imgUri;

@@ -21,4 +21,6 @@
     <string name="FromGallery">Из галереи</string>
     <string name="FromCamera">Камера</string>
     <string name="Cancel">Отмена</string>
+
+    <string name="NoteValidationFailure">Ошибка валидации!</string>
 </resources>
