@@ -3,5 +3,6 @@
     <array name="color_importance_array">
         <item>@color/colorVeryImportant</item>
         <item>@color/colorNotImportant</item>
+        <item>@color/colorDontMind</item>
     </array>
 </resources>

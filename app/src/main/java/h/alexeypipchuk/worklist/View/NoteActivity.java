@@ -1,20 +1,22 @@
 package h.alexeypipchuk.worklist.View;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+
 import dagger.android.AndroidInjection;
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
@@ -41,7 +43,7 @@ public class NoteActivity extends AppCompatActivity {
     EditText Description;
     RadioGroup StatusGroup;
     RadioGroup ImportantGroup;
-    FloatingActionButton btn;
+    ImagePickerFragment ImgPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,6 @@ public class NoteActivity extends AppCompatActivity {
             int id = getIntent().getIntExtra(ID_KEY, 0);
             loadData(id);
         } else note = new Note();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleButtonClick();
-            }
-        });
     }
 
     private void loadData(int id) {
@@ -86,9 +81,10 @@ public class NoteActivity extends AppCompatActivity {
         Description.setText(note.getDescription());
         ((RadioButton) StatusGroup.getChildAt(note.getStatus())).setChecked(true);
         ((RadioButton) ImportantGroup.getChildAt(note.getImportance())).setChecked(true);
+        ImgPicker.setImgUri(note.getImageUri());
     }
 
-    private void handleButtonClick() {
+    private void handleSubmitClick() {
         if (!dataValidator.validateNote(
                 Caption.getText().toString(),
                 Description.getText().toString(),
@@ -112,6 +108,7 @@ public class NoteActivity extends AppCompatActivity {
         note.setDate(Date.getText().toString());
         note.setImportance(ImportantState);
         note.setStatus(StatusState);
+        note.setImageUri(ImgPicker.getImgUri());
 
         viewModel.saveNote(note);
 
@@ -124,10 +121,17 @@ public class NoteActivity extends AppCompatActivity {
         Description = findViewById(R.id.description);
         StatusGroup = findViewById(R.id.StatusGroup);
         ImportantGroup = findViewById(R.id.ImportantGroup);
-        btn = findViewById(R.id.floatingActionButton);
+        ImgPicker = (ImagePickerFragment) getSupportFragmentManager().findFragmentById(R.id.imgPicker);
 
         initRadioGroup(StatusGroup, stringsHelper.getAllStatuses());
         initRadioGroup(ImportantGroup, stringsHelper.getAllImportances());
+
+        findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleSubmitClick();
+            }
+        });
     }
 
     private void initRadioGroup(RadioGroup group, String[] values) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Список дел</string>
+    <string name="note_activity_label">Создание нового дела</string>
+    <string name="action_create_order">Создать</string>
+
+    <string name="Caption">Название*</string>
+    <string name="Status">Статус*</string>
+    <string name="Important">Важность*</string>
+    <string name="Date">Дата</string>
+    <string name="Description">Описание</string>
+
+    <string name="Done">Выполнено</string>
+    <string name="NotPerf">Не выполнено</string>
+    <string name="VeryImportant">Важно</string>
+    <string name="NotImportant">Маловажно</string>
+    <string name="DontMind">Забей</string>
+
+    <string name="ImgBtn">Добавить картинку</string>
+    <string name="ImgDialog">Выберете источник картинки</string>
+    <string name="FromGallery">Из галереи</string>
+    <string name="FromCamera">Камера</string>
+    <string name="Cancel">Отмена</string>
+</resources>

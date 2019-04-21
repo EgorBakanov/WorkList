@@ -1,19 +1,26 @@
 package h.alexeypipchuk.worklist.View;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.IOException;
+import java.util.List;
+
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
 import h.alexeypipchuk.worklist.Utility.BackgroundColorHelper;
@@ -27,11 +34,13 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<Note> notes;
     private final StringsHelper stringsHelper;
     private final BackgroundColorHelper colorHelper;
+    private final Context context;
 
     MyAdapter(final Context context, final StringsHelper helper, final BackgroundColorHelper backgroundColorHelper) {
 
         this.stringsHelper = helper;
         this.colorHelper = backgroundColorHelper;
+        this.context = context;
 
         setListener(new Listener() {
             @Override
@@ -74,12 +83,27 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         CardView cardView = holder.cardView;
         String status = stringsHelper.getStatus(notes.get(position).getStatus());
         String importance = stringsHelper.getImportance(notes.get(position).getImportance());
+        Uri imgUri = notes.get(position).getImageUri();
 
         ((TextView) cardView.findViewById(R.id.caption)).setText(notes.get(position).getCaption());
         ((TextView) cardView.findViewById(R.id.importance)).setText(importance);
         ((TextView) cardView.findViewById(R.id.status)).setText(status);
 
-        colorHelper.setBackground(cardView,notes.get(position));
+        colorHelper.setBackground(cardView, notes.get(position));
+
+        if(ContextCompat.checkSelfPermission(context.getApplicationContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            if (imgUri != null) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ((ImageView) cardView.findViewById(R.id.imageView)).setImageBitmap(bitmap);
+            }
+        }
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
