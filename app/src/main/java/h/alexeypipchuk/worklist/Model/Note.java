@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "notes")
 public class Note {
 
@@ -15,14 +17,14 @@ public class Note {
     private String mCaption;
     private int mStatus;
     private String mDescription;
-    private String mDate;
+    private Date mDate;
     private int mImportance;
     private Uri imageUri;
 
     @Ignore
     public Note(){}
 
-    public Note(int id, String mCaption, int mStatus, String mDescription, String mDate, int mImportance, Uri imageUri) {
+    public Note(int id, String mCaption, int mStatus, String mDescription, Date mDate, int mImportance, Uri imageUri) {
         this.id = id;
         this.mCaption = mCaption;
         this.mStatus = mStatus;
@@ -64,11 +66,11 @@ public class Note {
         this.mDescription = mDescription;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return mDate;
     }
 
-    public void setDate(String mDate) {
+    public void setDate(Date mDate) {
         this.mDate = mDate;
     }
 

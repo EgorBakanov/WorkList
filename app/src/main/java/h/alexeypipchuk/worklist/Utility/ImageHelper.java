@@ -18,14 +18,14 @@ public class ImageHelper {
 
         File file;
         String path = Environment.getExternalStorageDirectory().toString();
-        file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+        file = new File(path, System.currentTimeMillis() + ".jpg");
 
         try {
             OutputStream stream = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             stream.flush();
             stream.close();
-        } catch (IOException e) // Catch the exception
+        } catch (IOException e)
         {
             e.printStackTrace();
         }

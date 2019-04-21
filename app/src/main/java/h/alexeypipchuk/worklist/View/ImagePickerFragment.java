@@ -9,16 +9,14 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
 
@@ -37,7 +35,6 @@ public class ImagePickerFragment extends Fragment {
     private static final int CAMERA_PERMISSION_REQUEST = 1;
 
     private Uri imgUri;
-
     private TextView imgName;
 
     @Inject
@@ -79,12 +76,12 @@ public class ImagePickerFragment extends Fragment {
 
         switch (requestCode) {
             case GALLERY_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     setImgUri(intent.getData());
                 }
                 break;
             case CAMERA_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
                     setImgUri(imageHelper.saveBitmap(bitmap));
                 }
@@ -104,6 +101,7 @@ public class ImagePickerFragment extends Fragment {
         }
     }
 
+    //region logic
     private void handleClick() {
         String[] options = stringsHelper.getImgPickerOptions();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -129,12 +127,9 @@ public class ImagePickerFragment extends Fragment {
 
     private void pickFromCamera() {
 
-        if (checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
+        if (checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST);
-        }
-        else
-        {
+        } else {
             Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cameraIntent, CAMERA_REQUEST);
         }
@@ -145,6 +140,7 @@ public class ImagePickerFragment extends Fragment {
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
+    //endregion
 
     Uri getImgUri() {
         return imgUri;

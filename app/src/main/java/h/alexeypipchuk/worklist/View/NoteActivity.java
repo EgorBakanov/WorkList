@@ -60,58 +60,7 @@ public class NoteActivity extends AppCompatActivity {
         } else note = new Note();
     }
 
-    private void loadData(int id) {
-        viewModel.init(id);
-        viewModel.getNote().observe(this, new Observer<Note>() {
-
-            @Override
-            public void onChanged(Note note) {
-                setInitialData(note);
-            }
-        });
-    }
-
-    private void setInitialData(Note note) {
-        this.note = note;
-        Caption.setText(note.getCaption());
-        Date.setText(note.getDate());
-        Description.setText(note.getDescription());
-        ((RadioButton) StatusGroup.getChildAt(note.getStatus())).setChecked(true);
-        ((RadioButton) ImportantGroup.getChildAt(note.getImportance())).setChecked(true);
-        ImgPicker.setImgUri(note.getImageUri());
-    }
-
-    private void handleSubmitClick() {
-        if (!dataValidator.validateNote(
-                Caption.getText().toString(),
-                Description.getText().toString(),
-                Date.getText().toString(),
-                StatusGroup.getCheckedRadioButtonId(),
-                ImportantGroup.getCheckedRadioButtonId())) {
-
-            Toast.makeText(getApplicationContext(), "Заполните обязательные поля", Toast.LENGTH_LONG).show();
-        } else {
-            saveNote();
-        }
-    }
-
-    private void saveNote() {
-        int StatusState = StatusGroup.getCheckedRadioButtonId();
-
-        int ImportantState = ImportantGroup.getCheckedRadioButtonId();
-
-        note.setCaption(Caption.getText().toString());
-        note.setDescription(Description.getText().toString());
-        note.setDate(Date.getText().toString());
-        note.setImportance(ImportantState);
-        note.setStatus(StatusState);
-        note.setImageUri(ImgPicker.getImgUri());
-
-        viewModel.saveNote(note);
-
-        this.finish();
-    }
-
+    //region view_initialization
     private void initView() {
         Caption = findViewById(R.id.caption);
         Date = findViewById(R.id.date);
@@ -140,4 +89,59 @@ public class NoteActivity extends AppCompatActivity {
             group.addView(b);
         }
     }
+    //endregion
+
+    //region logic
+    private void loadData(int id) {
+        viewModel.init(id);
+        viewModel.getNote().observe(this, new Observer<Note>() {
+
+            @Override
+            public void onChanged(Note note) {
+                setInitialData(note);
+            }
+        });
+    }
+
+    private void setInitialData(Note note) {
+        this.note = note;
+        Caption.setText(note.getCaption());
+        Date.setText(stringsHelper.getStringFromDate(note.getDate()));
+        Description.setText(note.getDescription());
+        ((RadioButton) StatusGroup.getChildAt(note.getStatus())).setChecked(true);
+        ((RadioButton) ImportantGroup.getChildAt(note.getImportance())).setChecked(true);
+        ImgPicker.setImgUri(note.getImageUri());
+    }
+
+    private void handleSubmitClick() {
+        if (!dataValidator.validateNote(
+                Caption.getText().toString(),
+                Description.getText().toString(),
+                Date.getText().toString(),
+                StatusGroup.getCheckedRadioButtonId(),
+                ImportantGroup.getCheckedRadioButtonId())) {
+
+            Toast.makeText(getApplicationContext(), getText(R.string.NoteValidationFailure), Toast.LENGTH_LONG).show();
+        } else {
+            saveNote();
+        }
+    }
+
+    private void saveNote() {
+        int StatusState = StatusGroup.getCheckedRadioButtonId();
+
+        int ImportantState = ImportantGroup.getCheckedRadioButtonId();
+
+        note.setCaption(Caption.getText().toString());
+        note.setDescription(Description.getText().toString());
+        note.setDate(stringsHelper.getDateFromString(Date.getText().toString()));
+        note.setImportance(ImportantState);
+        note.setStatus(StatusState);
+        note.setImageUri(ImgPicker.getImgUri());
+
+        viewModel.saveNote(note);
+
+        this.finish();
+    }
+    //endregion
 }

@@ -5,6 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -16,7 +20,7 @@ public class StringsHelper {
     private Context context;
 
     @Inject
-    public StringsHelper(Context context){
+    public StringsHelper(Context context) {
         this.context = context;
     }
 
@@ -30,17 +34,39 @@ public class StringsHelper {
         return chooseString(getAllImportances(), id);
     }
 
-    public String[] getAllStatuses(){
+    public String[] getAllStatuses() {
         return context.getResources().getStringArray(R.array.statuses_array);
     }
 
-    public String[] getAllImportances(){
+    public String[] getAllImportances() {
         return context.getResources().getStringArray(R.array.importances_array);
+    }
+
+    public Date getDateFromString(String s) {
+        if (s != null && !s.isEmpty()) {
+            try {
+                DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+                df.setLenient(false);
+                return df.parse(s);
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public String getStringFromDate(Date date) {
+        if (date != null) {
+            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+            df.setLenient(false);
+            return df.format(date);
+        }
+        return "";
     }
 
     public String chooseString(String[] strings, int id) {
 
-        return (id < 0 || id >= strings.length) ?  "" : strings[id];
+        return (id < 0 || id >= strings.length) ? "" : strings[id];
     }
 
     //https://stackoverflow.com/a/25005243
@@ -66,7 +92,7 @@ public class StringsHelper {
         return result;
     }
 
-    public String[] getImgPickerOptions(){
+    public String[] getImgPickerOptions() {
         return context.getResources().getStringArray(R.array.img_picker_options_array);
     }
 }
