@@ -1,7 +1,9 @@
 package h.alexeypipchuk.worklist.View;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -11,14 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.IOException;
+import java.util.List;
 
 import h.alexeypipchuk.worklist.Model.Note;
 import h.alexeypipchuk.worklist.R;
@@ -90,14 +91,18 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         colorHelper.setBackground(cardView, notes.get(position));
 
-        if (imgUri != null) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if(ContextCompat.checkSelfPermission(context.getApplicationContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            if (imgUri != null) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ((ImageView) cardView.findViewById(R.id.imageView)).setImageBitmap(bitmap);
             }
-            ((ImageView) cardView.findViewById(R.id.imageView)).setImageBitmap(bitmap);
         }
 
         cardView.setOnClickListener(new View.OnClickListener() {
